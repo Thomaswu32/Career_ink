@@ -83,6 +83,83 @@ Select your preferred career path and download a fully formatted A4 PDF report w
 
 ---
 
+## 🤖 Multi-Agent Architecture
+
+CareerInk is powered by two specialised AI agents that work in sequence, each owning a distinct stage of the user journey. Both agents are built with **LangGraph** state machines and call **GPT-4o** via the Deploy AI platform.
+
+```
+User Input
+    │
+    ▼
+┌─────────────────────────────────────────────────────┐
+│                     AGENT 1                         │
+│              CV Parser & Profiler                   │
+│                                                     │
+│  Node 1.1 ── parse_cv_node                          │
+│    └─ Extracts: hard skills, soft skills,           │
+│       experience years, current role,               │
+│       education level, career goals                 │
+│                                                     │
+│  Node 1.2 ── score_assessment_node                  │
+│    └─ Scores 48 psychometric responses into:        │
+│       • Big Five personality traits (OCEAN)         │
+│       • Holland RIASEC work style codes             │
+│       • Work values (collaboration, problem-        │
+│         solving, leadership, dynamic environment)   │
+│                                                     │
+│  OUTPUT → Unified UserProfile object                │
+└─────────────────────────────────────────────────────┘
+    │
+    │  UserProfile passed as input to Agent 2
+    ▼
+┌─────────────────────────────────────────────────────┐
+│                     AGENT 2                         │
+│          Career Matcher & Report Builder            │
+│                                                     │
+│  Node 2.1 ── match_careers_node                     │
+│    └─ Runs weighted scoring against all 50 roles:   │
+│       • Skills match        40%                     │
+│       • Personality fit     25%                     │
+│       • Work style & values 20%                     │
+│       • Experience level    15%                     │
+│       Returns top-N ranked CareerMatch objects      │
+│                                                     │
+│  Node 2.2 ── generate_justifications_node           │
+│    └─ Calls GPT-4o once per top match to write      │
+│       a personalised 1-sentence justification       │
+│       explaining WHY this role fits this user       │
+│                                                     │
+│  OUTPUT → Enriched CareerMatch list with            │
+│           structured report content from            │
+│           50 career prospect reports (.docx)        │
+└─────────────────────────────────────────────────────┘
+    │
+    ▼
+PDF Generator (ReportLab)
+    └─ Compiles both agent outputs into a
+       downloadable A4 career report
+```
+
+### Agent Coordination Flow
+
+| Step | Agent | Trigger | Output |
+|---|---|---|---|
+| CV Upload | Agent 1 — `parse_cv_node` | User submits CV text | Extracted skills + metadata |
+| Assessment Submit | Agent 1 — `score_assessment_node` | User completes 48 questions | Personality + work style scores |
+| Career Discovery | Agent 2 — `match_careers_node` | Full UserProfile ready | Ranked career matches (0–100%) |
+| Justification | Agent 2 — `generate_justifications_node` | Match scores computed | 1-sentence LLM explanation per role |
+| PDF Download | PDF Generator | User selects career path | Formatted A4 report |
+
+### Why Two Agents?
+
+**Agent 1** focuses on **understanding the user** — it needs to interpret unstructured CV text and raw psychometric scores into a clean, structured profile. This is fundamentally a *data extraction and normalisation* problem.
+
+**Agent 2** focuses on **matching and storytelling** — it takes the structured profile and uses both deterministic scoring (the weighted algorithm) and generative AI (the justification sentences) to produce recommendations that feel personal, not just algorithmic.
+
+Keeping them separate means each agent can be improved, swapped, or scaled independently — and the state machine (LangGraph) makes the data handoff between nodes explicit and inspectable.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
