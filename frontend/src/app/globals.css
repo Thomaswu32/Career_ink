@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand */
+  --color-brand-navy: #0A0F1E;
+  --color-brand-blue: #1E90FF;
+  --color-brand-cyan: #00BFFF;
+  --color-brand-white: #F4F6F8;
+  --color-brand-silver: #A8B4C8;
+  /* Semantic */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  /* Surfaces */
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F1F5F9;
+  /* Text */
+  --color-text-primary: #0A0F1E;
+  --color-text-secondary: #64748B;
+  /* Borders & Elevation */
+  --color-border: #E2E8F0;
+  --color-elevation: rgba(10, 15, 30, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #FFFFFF;
+  color: #0A0F1E;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Skill Chips */
+.chip {
+  @apply inline-flex items-center gap-1 px-3 py-1 rounded-pill text-sm font-medium transition-all duration-150;
+}
+.chip-default {
+  @apply border border-border text-text-secondary bg-white hover:border-brand-blue;
+}
+.chip-matched {
+  @apply bg-green-100 text-green-700;
+}
+.chip-gap {
+  @apply bg-amber-50 text-amber-700;
+}
+.chip-shake {
+  animation: shake 0.6s ease-in-out;
+}
+
+/* Shake keyframe */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-5px); }
+  30%       { transform: translateX(5px); }
+  45%       { transform: translateX(-4px); }
+  60%       { transform: translateX(4px); }
+  75%       { transform: translateX(-2px); }
+  90%       { transform: translateX(2px); }
+}
+
+/* Likert Pills */
+.likert-pill {
+  @apply flex-1 py-2 px-1 text-sm font-medium border border-brand-silver text-text-secondary rounded-btn
+         hover:bg-blue-50 transition-all duration-150 cursor-pointer text-center;
+}
+.likert-pill-selected {
+  @apply bg-brand-blue border-brand-blue text-white;
+}
+
+/* Career card */
+.career-card {
+  @apply bg-white border border-border rounded-card shadow-card p-5 transition-all duration-200;
+}
+.career-card:hover {
+  @apply shadow-panel border-brand-blue/30;
+}
+
+/* Progress bar */
+.progress-bar-track {
+  @apply h-1 bg-border rounded-pill overflow-hidden;
+}
+.progress-bar-fill {
+  @apply h-full bg-brand-blue rounded-pill transition-all duration-500 ease-in-out;
+}
+
+/* Loading dots */
+.loading-dots {
+  @apply flex gap-1.5 items-center;
+}
+.loading-dot {
+  @apply w-2 h-2 rounded-full bg-brand-blue animate-pulse-dot;
+}
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #A8B4C8; }
