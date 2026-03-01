@@ -8,6 +8,18 @@
   From career confusion to clear career direction — in 30–45 minutes.
 </p>
 
+<p align="center">
+  <a href="https://07sh1vso.run.complete.dev/" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-07sh1vso.run.complete.dev-1E90FF?style=for-the-badge" alt="Live Demo" />
+  </a>
+</p>
+
+---
+
+## 🌐 Live Demo
+
+**[https://07sh1vso.run.complete.dev/](https://07sh1vso.run.complete.dev/)**
+
 ---
 
 ## Overview
